@@ -5,8 +5,8 @@ Este proyecto requiere configuración de variables de entorno y Docker para func
 Base de datos
 DB_HOST=db
 DB_PORT=3001
-DB_USER=admin
-DB_PASSWORD=password_segura
+DB_USER=usuario
+DB_PASSWORD=password
 DB_NAME=auth_db
 
 ---------------------------------------------------------------------------------------
@@ -38,11 +38,9 @@ services:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "admin", "-pclave_db"]
       interval: 5s
       timeout: 10s
-      retries: 5
+      retries: 10
     volumes:
       - mariadb_data:/var/lib/mysql
-    ports:
-      - "3306:3306"
     networks:
       - backend
 

@@ -3,11 +3,12 @@ Este proyecto requiere configuración de variables de entorno y Docker para func
 
 #Crea un archivo .env en la raíz del proyecto:
 Base de datos
-DB_HOST=db
-DB_PORT=3001
-DB_USER=admin
-DB_PASSWORD=password_segura
+PORT=3001
+DB_HOST=mariadb
+DB_USER=usuario
+DB_PASSWORD=clave
 DB_NAME=auth_db
+DB_ROOT_PASSWORD=root
 
 ---------------------------------------------------------------------------------------
 
@@ -23,26 +24,27 @@ services:
     env_file:
       - .env
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy  # Espera hasta que el healthcheck pase
     networks:
       - backend
 
   mariadb:
-    image: mariadb:11
+    image: mariadb:10.5
     environment:
       MARIADB_ROOT_PASSWORD: root
       MARIADB_DATABASE: auth_db
-      MARIADB_USER: usuario_db
-      MARIADB_PASSWORD: clave_db
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "admin", "-pclave_db"]
+      test: ["CMD", "mysql", "-uroot", "-proot", "-e", "SELECT 1"]
       interval: 5s
-      timeout: 10s
-      retries: 5
+      timeout: 20s
+      retries: 10
     volumes:
       - mariadb_data:/var/lib/mysql
-    ports:
-      - "3306:3306"
+    #ports:
+    #  - "3306:3306"
     networks:
       - backend
 
@@ -51,6 +53,7 @@ volumes:
 
 networks:
   backend:
+
 
 -----------------------------------------------
 

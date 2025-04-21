@@ -1,0 +1,21 @@
+# Archivos de entorno (contienen contraseñas/variables sensibles)
+.env
+.env.local
+
+# Docker
+.dockerignore
+docker-compose.override.yml  # (si usas configs locales)
+docker-compose.yml
+
+# Dependencias de Node
+node_modules/
+
+# Logs y directorios de IDE
+npm-debug.log*
+.DS_Store
+.idea/
+.vscode/
+
+# Builds y carpetas de producción
+dist/
+build/

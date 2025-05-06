@@ -3,10 +3,10 @@ require('dotenv').config();
 
 const connectWithRetry = () => {
   const connection = mysql.createConnection({
-    host: process.env.DB_HOST || 'mariadb-auth',  // Usa el nombre del servicio en Docker
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+    host: process.env.AUTH_DB_HOST || 'mariadb-auth',  // Usa el nombre del servicio en Docker
+    user: process.env.AUTH_DB_USER,
+    password: process.env.AUTH_DB_PASSWORD,
+    database: process.env.AUTH_DB_NAME || 'authdb',
     port: 3306
   });
 
